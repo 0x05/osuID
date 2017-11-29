@@ -3,11 +3,18 @@
 class parser {
 public:
 	parser();	
-	void parseRankings();
-	void parseProfiles();
+	int parseRankings();
+	int parseProfiles();
+	
+	void writeUserID();
+	void writeProfileData();
+
 	void printStruct();
 
 private:
+	int MIN_USER = 80;
+	int MAX_USER = 90;
+
 	struct user {
 		int id;
 		std::string username;
@@ -17,7 +24,6 @@ private:
 		int pp;
 	};
 	user u[10000];
-	
 	int userID[10000] = { 0 };
 	
 };

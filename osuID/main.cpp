@@ -10,7 +10,8 @@ int main() {
 	parser p;
 
 	p.parseProfiles();
-	p.printStruct();
+	p.writeUserID();
+	p.writeProfileData();
 
 	system("Pause");
 

@@ -1,3 +1,4 @@
+#include "cconnect.h"
 #include "curl\curl.h"
 #include "parser.h"
 #include <iostream>
@@ -6,7 +7,6 @@
 #include <string>
 #include <regex>
 
-#include "cconnect.h"
 
 using std::cout;
 using std::endl;
@@ -14,7 +14,7 @@ using std::endl;
 parser::parser() {}
 
 // Parse ranking pages for profile IDs and store into an array
-void parser::parseRankings() {
+int parser::parseRankings() {
 
 	cconnect c;
 
@@ -27,7 +27,7 @@ void parser::parseRankings() {
 
 	for (int page = 1; page <= 2; page++) {
 		
-		cout << "Retrieving page " << page << "... ";
+		cout << "Retrieving rankings page " << page << "... ";
 		
 		std::stringstream URL;
 		std::string base = "https://osu.ppy.sh/rankings/osu/performance?page=";
@@ -46,13 +46,11 @@ void parser::parseRankings() {
 		}
 	}
 
-	//for (int i = 0; i < 100; i++) {
-	//	std::cout << "ID #" << i+1 << ": " << userID[i] << std::endl;
-	//}
+	return 0;
 }
 
 // Parse profile pages and store into struct
-void parser::parseProfiles() {
+int parser::parseProfiles() {
 
 	cconnect c;
 
@@ -66,7 +64,7 @@ void parser::parseProfiles() {
 
 	parseRankings();
 	
-	for (int pid = 44; pid < 54; pid++) {
+	for (int pid = MIN_USER; pid < MAX_USER; pid++) {
 
 		cout << "Retrieving profile " << pid << " [" << userID[pid] << "]";
 
@@ -143,8 +141,36 @@ void parser::parseProfiles() {
 
 		cout << "Done" << endl;
 	}
+
+	return 0;
 }
 
+void parser::writeUserID() {
+	std::ofstream ofs("uid.dat");
+	for (int i = 0; i < 100; i++) {
+		ofs << userID[i] << endl;
+	}
+}
+
+void parser::writeProfileData() {
+	std::ofstream ofs("profile.dat"); 
+	for (int i = 0; i < 10; i++) {
+		ofs << u[i].id << "," <<
+			u[i].username << "," <<
+			u[i].rank << "," <<
+			u[i].pp << "," <<
+			u[i].age << ",";
+
+		for (int p = 0; p < 4; p++) {
+			ofs << u[i].playstyle[p];
+			if (p == 3) {
+				ofs << endl;
+			}
+		}	
+	}
+}
+
+// not needed
 void parser::printStruct() {
 
 	for (int c = 0; c < 10; c++) {
