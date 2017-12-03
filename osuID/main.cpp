@@ -9,9 +9,11 @@ int main() {
 
 	parser p;
 
-	p.parseProfiles();
-	p.writeUserID();
-	p.writeProfileData();
+	//p.parseProfiles();
+	//p.writeUserID();
+	//p.writeProfileData();
+	p.loadProfileData();
+	p.printStruct();
 
 	system("Pause");
 

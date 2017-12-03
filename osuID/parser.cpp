@@ -151,7 +151,7 @@ void parser::writeUserID() {
 		ofs << userID[i] << endl;
 	}
 }
-
+/*
 void parser::writeProfileData() {
 	std::ofstream ofs("profile.dat"); 
 	for (int i = 0; i < 10; i++) {
@@ -167,6 +167,32 @@ void parser::writeProfileData() {
 				ofs << endl;
 			}
 		}	
+	}
+}*/
+
+void parser::writeProfileData() {
+	std::ofstream ofs("profile.dat");
+	boost::archive::text_oarchive oa(ofs);
+	for (int i = 0; i < 10;i++) {
+		oa << u[i].id;
+		oa << u[i].username;
+		oa << u[i].age;
+		oa << u[i].playstyle;
+		oa << u[i].rank;
+		oa << u[i].pp;
+	}
+}
+
+void parser::loadProfileData() {
+	std::ifstream ifs("profile.dat");
+	boost::archive::text_iarchive ia(ifs);
+	for (int i = 0; i < 10; i++) {
+		ia >> u[i].id;
+		ia >> u[i].username;
+		ia >> u[i].age;
+		ia >> u[i].playstyle;
+		ia >> u[i].rank;
+		ia >> u[i].pp;
 	}
 }
 
